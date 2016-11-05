@@ -1,0 +1,49 @@
+version: "2"
+
+services:
+  web:
+   image: nginx:latest
+   container_name: Nginx
+   ports:
+   - "80:80"
+   volumes:
+   - ./public:/public
+   - ./src/site.conf:/etc/nginx/conf.d/site.conf
+   - ./src/nginx/logs:/var/log/nginx/
+
+  php:
+   image: php:7-fpm
+   container_name: PHP7
+   volumes:
+   - ./public:/public
+
+  db:
+   image: mariadb:latest
+   container_name: MariaDB
+   volumes:
+    - ./src/mariadb:/var/lib/mysql
+    #-./docker-runtime/mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+   environment:
+    MYSQL_RANDOM_ROOT_PASSWORD: 1
+    MYSQL_DATABASE: dev
+    MYSQL_USER: dev
+    MYSQL_PASSWORD: dev123
+    #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
+   expose:
+   - 3306
+
+  pma:
+   image: phpmyadmin/phpmyadmin
+   container_name: phpMyAdmin
+   environment:
+    PMA_ARBITRARY: 1
+    PMA_HOST: db
+    PMA_USER: dev
+    PMA_PASSWORD: dev123
+    PHP_UPLOAD_MAX_FILESIZE: 1G
+    PHP_MAX_INPUT_VARS: 1G
+   restart: always
+   ports:
+   - "8001:80"
+   volumes:
+   - ./src/sessions:/sessions 
