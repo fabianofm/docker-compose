@@ -1,0 +1,8 @@
+public/*
+!public/index.php
+src/nginx
+src/nginx/*
+src/mariadb
+src/mariadb/*
+src/sessions
+src/sessions/*
