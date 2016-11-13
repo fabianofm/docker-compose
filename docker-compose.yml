@@ -12,7 +12,8 @@ services:
    - ./src/nginx/logs:/var/log/nginx/
 
   php:
-   image: php:7-fpm
+   build:
+    context: ./src/php7
    container_name: PHP7
    volumes:
    - ./public:/public
@@ -22,7 +23,6 @@ services:
    container_name: MariaDB
    volumes:
     - ./src/mariadb:/var/lib/mysql
-    #-./docker-runtime/mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
    environment:
     MYSQL_RANDOM_ROOT_PASSWORD: 1
     MYSQL_DATABASE: dev
