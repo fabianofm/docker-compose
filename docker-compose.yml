@@ -29,8 +29,10 @@ services:
     MYSQL_USER: dev
     MYSQL_PASSWORD: dev123
     #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
-   expose:
-   - 3306
+   ports:
+   - "3366:3306"
+   #expose:
+   #- 3306
 
   pma:
    image: phpmyadmin/phpmyadmin
