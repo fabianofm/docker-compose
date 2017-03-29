@@ -3,6 +3,7 @@ version: "2"
 services:
   web:
    image: nginx:latest
+   mem_limit: 96m
    container_name: Nginx
    ports:
    - "80:80"
@@ -14,12 +15,14 @@ services:
   php:
    build:
     context: ./src/php7
+   mem_limit: 96m
    container_name: PHP7
    volumes:
    - ./public:/public
 
   db:
    image: mariadb:latest
+   mem_limit: 96m
    container_name: MariaDB
    volumes:
     - ./src/mariadb:/var/lib/mysql
@@ -36,6 +39,7 @@ services:
 
   pma:
    image: phpmyadmin/phpmyadmin
+   mem_limit: 96m
    container_name: phpMyAdmin
    environment:
     PMA_ARBITRARY: 1
