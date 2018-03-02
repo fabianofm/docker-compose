@@ -46,10 +46,22 @@ RUN docker-php-ext-install json
 
 # Install extensions through the scripts the container provides
 # Here we install the pdo_mysql extensions to access MySQL.
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql opcache
 
+# install xdebug
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug \
+    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_connect_back = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.idekey = \"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_port = 9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+#opcache.validate_timestamps - production environments: 0
 RUN usermod -u 1000 www-data
-RUN echo 'date.timezone="GMT"' >> /usr/local/etc/php/conf.d/date.ini
+RUN echo 'date.timezone="America/Sao_Paulo"' >> /usr/local/etc/php/conf.d/date.ini
 RUN echo 'opcache.enable=1' >> /usr/local/etc/php/conf.d/opcache.conf
-RUN echo 'opcache.validate_timestamps=0' >> /usr/local/etc/php/conf.d/opcache.conf
+RUN echo 'opcache.validate_timestamps=1' >> /usr/local/etc/php/conf.d/opcache.conf
 RUN echo 'opcache.fast_shutdown=1' >> /usr/local/etc/php/conf.d/opcache.conf
