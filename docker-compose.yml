@@ -1,29 +1,23 @@
-version: "2"
+version: "3"
 
 services:
   web:
    image: nginx:latest
-   mem_limit: 96m
-   container_name: Nginx
    ports:
    - "80:80"
    volumes:
    - ./public:/public
-   - ./src/site.conf:/etc/nginx/conf.d/site.conf
+   - ./src/site.conf:/etc/nginx/nginx.conf
    - ./src/nginx/logs:/var/log/nginx/
 
   php:
    build:
     context: ./src/php7
-   mem_limit: 96m
-   container_name: PHP7
    volumes:
    - ./public:/public
 
   db:
    image: mariadb:latest
-   mem_limit: 96m
-   container_name: MariaDB
    volumes:
     - ./src/mariadb:/var/lib/mysql
    environment:
@@ -31,16 +25,11 @@ services:
     MYSQL_DATABASE: dev
     MYSQL_USER: dev
     MYSQL_PASSWORD: dev123
-    #command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
    ports:
-   - "3366:3306"
-   #expose:
-   #- 3306
+   - "3306:3306"
 
   pma:
    image: phpmyadmin/phpmyadmin
-   mem_limit: 96m
-   container_name: phpMyAdmin
    environment:
     PMA_ARBITRARY: 1
     PMA_HOST: db
