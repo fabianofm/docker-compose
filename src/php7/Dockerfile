@@ -48,6 +48,10 @@ RUN docker-php-ext-install json
 # Here we install the pdo_mysql extensions to access MySQL.
 RUN docker-php-ext-install pdo pdo_mysql opcache
 
+#MySQLi
+RUN docker-php-ext-install mysqli 
+RUN docker-php-ext-enable mysqli
+
 # install xdebug
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug \
