@@ -3,4 +3,4 @@ PHP applications using Nginx, phpMyAdmin, MariaDB and PHP7-FPM.
 * Run `docker-compose up`
 * Go http://develop.devcom/
 ----
-* Compose file version 3; PHP Extension: memcached, opcache, pdo_mysql, gd, iconv, mcrypt, intl, mbstring, curl, zip, json, xdebug
+* Compose file version 3; PHP Extension: memcached, opcache, mysqli, pdo_mysql, gd, iconv, mcrypt, intl, mbstring, curl, zip, json, xdebug
