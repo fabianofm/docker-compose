@@ -24,13 +24,13 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: 1
     MYSQL_DATABASE: dev
     MYSQL_USER: dev
-    MYSQL_PASSWORD: dev123
+    MYSQL_PASSWORD: dev123 #root password show in log in: db_1   | GENERATED ROOT PASSWORD: ...
    ports:
    - "3306:3306"
 
   pma:
    image: phpmyadmin/phpmyadmin
-   environment:
+   environment: 
     PMA_ARBITRARY: 1
     PMA_HOST: db
     PMA_USER: dev
